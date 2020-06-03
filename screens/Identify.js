@@ -17,6 +17,7 @@ const Identify = ({ params }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop:Constants.statusBarHeight,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
