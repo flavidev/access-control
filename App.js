@@ -1,36 +1,42 @@
-import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { Text, View, ImageBackground } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Registration from "./screens/Registration";
+import Edit from "./screens/Edit";
+import Identify from "./screens/Identify";
+import Constants from "expo-constants";
 
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native!</Text>
-      <Text style={styles.instructions}>To get started, edit App.js</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: () => {
+            let iconName;
+            if (route.name === "Register") {
+              iconName = "ios-add-circle";
+            } else if (route.name === "Identify") {
+              iconName = "ios-qr-scanner";
+            } else if (route.name === "Edit") {
+              iconName = "ios-hammer";
+            }
+            return <Ionicons name={iconName} size={25} color={"white"} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "#00adb5",
+          inactiveTintColor: "white",
+          style: { backgroundColor: "#393e46" },
+        }}
+      >
+        <Tab.Screen name="Register" component={Registration} />
+        <Tab.Screen name="Identify" component={Identify} />
+        <Tab.Screen name="Edit" component={Edit} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
