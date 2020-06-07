@@ -1,20 +1,20 @@
 import React from "react";
 import { View, Text } from "react-native";
-import PhotoBooth from "../src/components/PhotoBooth";
 import Constants from "expo-constants";
 
-const Identify = () => {
+
+const Edit = () => {
   return (
     <View
       style={{
         flex: 1,
         marginTop: Constants.statusBarHeight,
+
       }}
     >
-      <Text style={{ alignSelf: "center", marginTop: 50 }}>IDENTIFY</Text>
-      <PhotoBooth />
+      <Text>EDIT SCREEN</Text>
     </View>
   );
 };
 
-export default Identify;
+export default Edit;

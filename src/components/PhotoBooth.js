@@ -7,9 +7,9 @@ import {
   Modal,
   Image,
 } from "react-native";
-import { Camera } from "expo-camera";
+import { Camera, Constants } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
-import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function PhotoBooth() {
   const camRef = useRef(null);
@@ -66,10 +66,12 @@ export default function PhotoBooth() {
                 );
               }}
             >
-              <Text style={{ fontSize: 18, marginBottom: 10, color: "white" }}>
-                {" "}
-                Flip{" "}
-              </Text>
+              <Ionicons
+                name="ios-refresh"
+                size={35}
+                color="white"
+                style={{ marginBottom: 15, marginLeft: 10 }}
+              />
             </TouchableOpacity>
           </View>
         </Camera>
@@ -79,7 +81,7 @@ export default function PhotoBooth() {
         style={styles.cameraButtonContainer}
         onPress={takePicture}
       >
-        <FontAwesome name="camera" size={23} color="#FFF" />
+        <Ionicons name="ios-camera" size={50} color="white" />
       </TouchableOpacity>
 
       {capturedPhoto && (
@@ -96,11 +98,11 @@ export default function PhotoBooth() {
               style={{ margin: 10 }}
               onPress={() => setOpenPreview(false)}
             >
-              <FontAwesome name="window-close" size={50} />
+              <Ionicons name="md-close-circle" size={50} color="black" />
             </TouchableOpacity>
             <Image
               source={{ uri: capturedPhoto }}
-              style={{ width: "100%", height: 300, borderRadius: 20 }}
+              style={{ width: "100%", height: "65%", borderRadius: 20 }}
             />
           </View>
         </Modal>
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
   cameraButtonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#393e46",
+    backgroundColor: "#00adb5",
     margin: 20,
     borderRadius: 10,
     height: 50,

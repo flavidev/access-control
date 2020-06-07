@@ -1,6 +1,8 @@
 import React from "react";
-import { View, TextInput, StyleSheet, Button } from "react-native";
+import { View, TextInput, StyleSheet, Text } from "react-native";
 import Constants from "expo-constants";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 
 const Registration = ({ params }) => (
   <View style={styles.container}>
@@ -30,12 +32,10 @@ const Registration = ({ params }) => (
       placeholderTextColor="white"
       keyboardType="number-pad"
     />
-    <View style={styles.buttonContainer}>
-      <Button title="Take a picture" color="#393e46" />
-    </View>
-    <View style={styles.buttonContainer}>
-      <Button title="Submit" color="#00adb5" />
-    </View>
+
+      <TouchableOpacity>
+        <Text style={styles.nextScreen}>Take a Profile Picture</Text>
+      </TouchableOpacity>
   </View>
 );
 
@@ -51,16 +51,31 @@ const styles = StyleSheet.create({
     width: 350,
     height: 55,
     backgroundColor: "#393e46",
-    margin: 10,
+    margin: 20,
     padding: 8,
     color: "white",
     borderRadius: 14,
     fontSize: 18,
     fontWeight: "500",
   },
-  buttonContainer: {
-    marginTop: 35,
+  nextScreen: {
+    width: 350,
+    height: 55,
+    backgroundColor: "#00adb5",
+    margin: 20,
+    color: "white",
+    borderRadius: 14,
+    fontSize: 18,
+    fontWeight: "500",
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontWeight: "bold"
   },
-});
+
+
+  });
+
+
+    
 
 export default Registration;
