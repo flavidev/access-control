@@ -40,13 +40,13 @@ const Registration = ({ params }) => (
 );
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop:Constants.statusBarHeight,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "white",
-    },
+  container: {
+    flex: 1,
+    marginTop: Constants.statusBarHeight,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
   input: {
     width: 350,
     height: 55,

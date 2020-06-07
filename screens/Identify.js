@@ -1,41 +1,20 @@
 import React from "react";
-import { Text, View, Image, StyleSheet, Button } from "react-native";
+import { View, Text } from "react-native";
+import PhotoBooth from "../src/components/PhotoBooth";
 import Constants from "expo-constants";
 
-const Identify = ({ params }) => (
-  <View style={styles.container}>
-    <Text style={styles.title}>Identify</Text>
-
-    <Image source={require("../assets/image.png")} style={styles.image} />
-
-    <View style={styles.buttonContainer}>
-      <Button title="Photo" color="#00adb5" />
+const Identify = () => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        marginTop: Constants.statusBarHeigh,
+      }}
+    >
+      <Text style={{ alignSelf: "center", marginTop: 50 }}>IDENTIFY</Text>
+      <PhotoBooth />
     </View>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop:Constants.statusBarHeight,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-  title: {
-    fontSize: 25,
-    color: "#00adb5",
-    fontWeight: "bold",
-  },
-  image: {
-    width: 250,
-    height: 250,
-    resizeMode: "contain",
-  },
-  buttonContainer: {
-    marginTop: 10,
-  },
-});
+  );
+};
 
 export default Identify;
-
