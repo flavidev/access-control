@@ -26,13 +26,14 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_USER:
-      return {
+        //console.log(`action is ${action.user.firstName}`)
+        return {
         ...state,
         userList: state.userList.concat({
             key: Math.random(),
-            firstName: action.firstName,
-            lastName: action.lastName,
-            accessLevel: action.accessLevel,
+            firstName: action.user.firstName,
+            lastName: action.user.lastName,
+            accessLevel: action.user.accessLevel,
         }),
       };
     case DELETE_USER:

@@ -2,7 +2,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import Registration from "./screens/Registration";
+import Register from "./screens/Register";
 import Identify from "./screens/Identify";
 import Edit from "./screens/Edit";
 
@@ -33,7 +33,7 @@ export default function AccessControl() {
             style: { backgroundColor: "#393e46" },
           }}
         >
-          <Tab.Screen name="Register" component={Registration} />
+          <Tab.Screen name="Register" component={Register} />
           <Tab.Screen name="Identify" component={Identify} />
           <Tab.Screen name="Edit" component={Edit} />
         </Tab.Navigator>

@@ -3,11 +3,11 @@ import { View, TextInput, StyleSheet, Text } from "react-native";
 import Constants from "expo-constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { addUser } from "../src/actions/user";
-import { Formik } from 'formik';
+import { addUser } from "../actions/user";
+import { Formik } from "formik";
 
-
-function Registration({ addUser }) {
+function RegisterForm({ addUser, navigation }) {
+  const Foo = { firstName: "Foo", lastName: "Bar", accessLevel: "Zaz" };
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -46,10 +46,12 @@ function Registration({ addUser }) {
             firstName: firstName,
             lastName: lastName,
             accessLevel: accessLevel,
-            key: Math.random(),
           })
         }
       >
+        <Text style={styles.nextScreen}>Add User</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("PhotoBooth")}>
         <Text style={styles.nextScreen}>Take a Profile Picture</Text>
       </TouchableOpacity>
     </View>
@@ -95,4 +97,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null,mapDispatchToProps)(Registration);
+export default connect(null, mapDispatchToProps)(RegisterForm);
