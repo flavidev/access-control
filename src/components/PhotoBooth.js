@@ -94,16 +94,25 @@ export default function PhotoBooth() {
               margin: 20,
             }}
           >
-            <TouchableOpacity
-              style={{ margin: 10 }}
-              onPress={() => setOpenPreview(false)}
-            >
-              <Ionicons name="md-close-circle" size={50} color="black" />
-            </TouchableOpacity>
             <Image
               source={{ uri: capturedPhoto }}
               style={{ width: "100%", height: "65%", borderRadius: 20 }}
             />
+            <View style={{flexDirection:"row"}}>
+
+            <TouchableOpacity
+              style={{ marginVertical: 30, marginHorizontal:70 }}
+              onPress={() => setOpenPreview(false)}
+              >
+              <Ionicons name="md-close-circle" size={50} color="red" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ marginVertical: 30, marginHorizontal:70 }}
+              onPress={() => setOpenPreview(false)}
+              >
+              <Ionicons name="ios-checkmark-circle" size={50} color="green" />
+            </TouchableOpacity>
+              </View>
           </View>
         </Modal>
       )}

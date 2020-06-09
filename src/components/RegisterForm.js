@@ -4,7 +4,6 @@ import Constants from "expo-constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { addUser } from "../actions/user";
-import { Formik } from "formik";
 
 function RegisterForm({ addUser, navigation }) {
   const Foo = { firstName: "Foo", lastName: "Bar", accessLevel: "Zaz" };
@@ -12,6 +11,7 @@ function RegisterForm({ addUser, navigation }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [accessLevel, setAccessLevel] = useState("");
+
 
   return (
     <View style={styles.container}>
@@ -42,11 +42,13 @@ function RegisterForm({ addUser, navigation }) {
 
       <TouchableOpacity
         onPress={() =>
-          addUser({
-            firstName: firstName,
-            lastName: lastName,
-            accessLevel: accessLevel,
-          })
+          firstName !== "" && lastName !== "" && accessLevel !== ""
+            ? addUser({
+                firstName: firstName,
+                lastName: lastName,
+                accessLevel: accessLevel,
+              })
+            : alert("Please fill the form")
         }
       >
         <Text style={styles.nextScreen}>Add User</Text>

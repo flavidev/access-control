@@ -3,19 +3,19 @@ import { ADD_USER, DELETE_USER } from "../actions/types";
 const initialState = {
   userList: [
     {
-      key: Math.random(),
+      key: Math.random().toString().slice(2),
       firstName: "Flavio",
       lastName: "Vieira",
       accessLevel: "blue",
     },
     {
-      key: Math.random(),
+      key: Math.random().toString().slice(2),
       firstName: "Ana Rosa",
       lastName: "Lemos",
       accessLevel: "pink",
     },
     {
-      key: Math.random(),
+      key: Math.random().toString().slice(2),
       firstName: "Ricardo",
       lastName: "Japonês",
       accessLevel: "green",
@@ -26,11 +26,10 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_USER:
-        //console.log(`action is ${action.user.firstName}`)
         return {
         ...state,
         userList: state.userList.concat({
-            key: Math.random(),
+            key: Math.random().toString().slice(2),
             firstName: action.user.firstName,
             lastName: action.user.lastName,
             accessLevel: action.user.accessLevel,
