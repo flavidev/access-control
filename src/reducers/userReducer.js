@@ -16,8 +16,8 @@ const initialState = {
     },
     {
       key: Math.random().toString().slice(2),
-      firstName: "Ricardo",
-      lastName: "Japonês",
+      firstName: "Fabio",
+      lastName: "Feital",
       accessLevel: "green",
     },
   ],
@@ -26,6 +26,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_USER:
+      console.log(action.user)
         return {
         ...state,
         userList: state.userList.concat({

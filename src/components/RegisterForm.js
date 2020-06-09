@@ -12,7 +12,6 @@ function RegisterForm({ addUser, navigation }) {
   const [lastName, setLastName] = useState("");
   const [accessLevel, setAccessLevel] = useState("");
 
-
   return (
     <View style={styles.container}>
       <TextInput
@@ -40,6 +39,9 @@ function RegisterForm({ addUser, navigation }) {
         onChangeText={(text) => setAccessLevel(text)}
       />
 
+      <TouchableOpacity onPress={() => navigation.navigate("PhotoBooth")}>
+        <Text style={styles.nextScreen}>Take a Profile Picture</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() =>
           firstName !== "" && lastName !== "" && accessLevel !== ""
@@ -48,13 +50,10 @@ function RegisterForm({ addUser, navigation }) {
                 lastName: lastName,
                 accessLevel: accessLevel,
               })
-            : alert("Please fill the form")
+            : alert("Please fill the form and take a picture")
         }
       >
         <Text style={styles.nextScreen}>Add User</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("PhotoBooth")}>
-        <Text style={styles.nextScreen}>Take a Profile Picture</Text>
       </TouchableOpacity>
     </View>
   );

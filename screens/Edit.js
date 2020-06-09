@@ -9,7 +9,6 @@ import {
 import Constants from "expo-constants";
 import { connect } from "react-redux";
 import { deleteUser } from "../src/actions/user";
-import { clockRunning } from "react-native-reanimated";
 
 function Item({ firstName, lastName, accessLevel }) {
   return (
