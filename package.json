@@ -5,7 +5,8 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "android-reload": "adb shell input text 'RR'"
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.6",
@@ -16,6 +17,7 @@
     "expo-camera": "^8.2.0",
     "expo-splash-screen": "^0.2.3",
     "expo-updates": "~0.2.1",
+    "formik": "^2.1.4",
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-native": "0.61.4",
