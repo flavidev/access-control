@@ -7,9 +7,10 @@ import {
   Modal,
   Image,
 } from "react-native";
-import { Camera, Constants } from "expo-camera";
+import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import * as MediaLibrary from "expo-media-library";
 
 export default function PhotoBooth() {
   const camRef = useRef(null);
@@ -18,10 +19,12 @@ export default function PhotoBooth() {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [capturedPhoto, setCapturedPhoto] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
+  const [savedPhotoURI, setSavedPhotoURI] = useState("")
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = (await Camera.requestPermissionsAsync(), await MediaLibrary.requestPermissionsAsync()
+      );
       setHasPermission(status === "granted");
     })();
   }, []);
@@ -31,15 +34,21 @@ export default function PhotoBooth() {
   }
 
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>No access to camera or library</Text>;
   }
 
   async function takePicture() {
     const data = await camRef.current.takePictureAsync();
     setCapturedPhoto(data.uri);
     setOpenPreview(true);
-    console.log(data);
-  }
+    }
+
+    async function saveToGallery(photo){
+      const asset = await MediaLibrary.createAssetAsync(photo);
+      const asset_info = await MediaLibrary.getAssetInfoAsync(asset)
+      setSavedPhotoURI(asset_info.localUri)
+      console.log(savedPhotoURI)
+    }
 
   return (
     <View style={{ flex: 1 }}>
@@ -98,21 +107,20 @@ export default function PhotoBooth() {
               source={{ uri: capturedPhoto }}
               style={{ width: "100%", height: "65%", borderRadius: 20 }}
             />
-            <View style={{flexDirection:"row"}}>
-
-            <TouchableOpacity
-              style={{ marginVertical: 30, marginHorizontal:70 }}
-              onPress={() => setOpenPreview(false)}
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                style={{ marginVertical: 30, marginHorizontal: 70 }}
+                onPress={() => setOpenPreview(false)}
               >
-              <Ionicons name="md-close-circle" size={50} color="red" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ marginVertical: 30, marginHorizontal:70 }}
-              onPress={() => setOpenPreview(false)}
+                <Ionicons name="md-close-circle" size={50} color="red" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{ marginVertical: 30, marginHorizontal: 70 }}
+                onPress={() => (saveToGallery(capturedPhoto), setOpenPreview(false))}
               >
-              <Ionicons name="ios-checkmark-circle" size={50} color="green" />
-            </TouchableOpacity>
-              </View>
+                <Ionicons name="ios-checkmark-circle" size={50} color="green" />
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
       )}
