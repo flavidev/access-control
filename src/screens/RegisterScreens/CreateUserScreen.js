@@ -1,10 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Constants from "expo-constants";
+
 
 const CreateUserScreen = ({navigation}) => {
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableOpacity
       onPress={()=>navigation.navigate("RegistrationFormScreen") }
       >
@@ -13,8 +15,13 @@ const CreateUserScreen = ({navigation}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    marginTop:Constants.statusBarHeight,
+    alignItems:"center"
+  }
+});
 
 
 export default CreateUserScreen;
