@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Text } from "react-native";
+import { Picker } from "@react-native-community/picker";
 import Constants from "expo-constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { addUser } from "../actions/user";
 
 function RegisterForm({ addUser, navigation }) {
-  const Foo = { firstName: "Foo", lastName: "Bar", accessLevel: "Zaz" };
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,14 +30,34 @@ function RegisterForm({ addUser, navigation }) {
         placeholderTextColor="white"
         onChangeText={(text) => setLastName(text)}
       />
-      <TextInput
-        style={styles.input}
-        importantForAutofill="no"
-        placeholder="Access Level"
-        autoCapitalize="none"
-        placeholderTextColor="white"
-        onChangeText={(text) => setAccessLevel(text)}
-      />
+
+      <View
+        style={{
+          width: 350,
+          height: 55,
+          margin: 20,
+          padding: 8,
+          borderRadius: 14,
+          borderWidth: 1,
+          backgroundColor: "#393e46",
+          justifyContent:"center",
+        }}
+      >
+        <Picker
+          selectedValue={accessLevel}
+          style={{
+
+            color: "white",
+          }}
+          onValueChange={(itemValue, itemIndex) => setAccessLevel(itemValue)}
+        >
+          <Picker.Item label="Select Access Level" value="" />
+          <Picker.Item label="A1" color="black" value="A1" />
+          <Picker.Item label="B2" value="B2" />
+          <Picker.Item label="C3" value="C3" />
+          <Picker.Item label="VIP" value="VIP" />
+        </Picker>
+      </View>
 
       <TouchableOpacity onPress={() => navigation.navigate("PhotoBooth")}>
         <Text style={styles.nextScreen}>Take a Profile Picture</Text>
@@ -77,6 +97,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     fontSize: 18,
     fontWeight: "500",
+    paddingLeft:17
   },
   nextScreen: {
     width: 350,
@@ -94,7 +115,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUser: (user) => dispatch(addUser(user)),
+    newUser: (user) => dispatch(addUser(user)),
   };
 };
 
