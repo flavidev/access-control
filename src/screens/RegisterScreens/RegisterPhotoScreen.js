@@ -11,7 +11,7 @@ import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
-import UserDetailsField from "../../components/UserDetailsField";
+import UserDetailsBox from "../../components/UserDetailsBox";
 
 function RegisterPhotoScreen({ route, navigation }) {
   const newUser = {
@@ -53,6 +53,7 @@ function RegisterPhotoScreen({ route, navigation }) {
   async function saveToGallery(photo) {
     const asset = await MediaLibrary.createAssetAsync(photo);
     const asset_info = await MediaLibrary.getAssetInfoAsync(asset);
+    console.log(asset_info);
     newUser.userPhoto = asset_info.localUri;
     createAndReviewUserDetails();
   }
@@ -118,10 +119,12 @@ function RegisterPhotoScreen({ route, navigation }) {
               source={{ uri: capturedPhoto }}
               style={{ width: 270, height: 360, borderRadius: 20 }}
             />
-            <View style={{marginTop:20}}>
-              <UserDetailsField field={newUser.firstName} />
-              <UserDetailsField field={newUser.lastName} />
-              <UserDetailsField field={newUser.accessLevel} />
+            <View style={{ marginTop: 40 }}>
+              <UserDetailsBox
+                firstName={newUser.firstName}
+                lastName={newUser.lastName}
+                accessLevel={newUser.accessLevel}
+              />
             </View>
 
             <View style={{ flexDirection: "row" }}>
