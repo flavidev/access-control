@@ -63,9 +63,9 @@ function RegisterPhotoScreen({ route, navigation }) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, justifyContent: "center" }}>
       {isFocused && (
-        <Camera style={{ flex: 0.8 }} type={type} ref={camRef}>
+        <Camera style={{ flex: 1 }} type={type} ref={camRef}>
           <View
             style={{
               flex: 1,
@@ -97,13 +97,14 @@ function RegisterPhotoScreen({ route, navigation }) {
           </View>
         </Camera>
       )}
-
-      <TouchableOpacity
-        style={styles.cameraButtonContainer}
-        onPress={takePicture}
-      >
-        <Ionicons name="ios-camera" size={50} color="white" />
-      </TouchableOpacity>
+      <View style={{ alignContent: "flex-start" }}>
+        <TouchableOpacity
+          style={styles.cameraButtonContainer}
+          onPress={takePicture}
+        >
+          <Ionicons name="ios-camera" size={50} color="white" />
+        </TouchableOpacity>
+      </View>
 
       {capturedPhoto && (
         <Modal animationType="slide" transparent={false} visible={openPreview}>
@@ -117,7 +118,17 @@ function RegisterPhotoScreen({ route, navigation }) {
           >
             <Image
               source={{ uri: capturedPhoto }}
-              style={{ width: 270, height: 360, borderRadius: 20 }}
+              style={{
+                width: 270,
+                height: 360,
+                borderRadius: 20,
+
+                // fix inverted image preview when using front camera
+                transform:
+                  type === Camera.Constants.Type.back
+                    ? [{ rotateY: "0deg" }]
+                    : [{ rotateY: "180deg" }],
+              }}
             />
             <View style={{ marginTop: 40 }}>
               <UserDetailsBox
@@ -156,6 +167,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#00adb5",
     margin: 20,
+
     borderRadius: 10,
     height: 50,
   },

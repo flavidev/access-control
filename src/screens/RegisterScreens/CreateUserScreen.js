@@ -13,7 +13,10 @@ const CreateUserScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <Image
         source={{ uri: route.params.newUser.userPhoto }}
-        style={{ height: 360, width: 270, borderRadius: 14, marginBottom:20 }}
+        style={{ height: 360, width: 270, borderRadius: 14, marginBottom:20,
+          transform: [{ rotateY: '180deg' }]
+        }}
+        
       />
               <UserDetailsBox
                 firstName={newUser.firstName}
