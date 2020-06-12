@@ -11,6 +11,7 @@ import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
+import UserDetailsField from "../../components/UserDetailsField";
 
 function RegisterPhotoScreen({ route, navigation }) {
   const newUser = {
@@ -115,8 +116,14 @@ function RegisterPhotoScreen({ route, navigation }) {
           >
             <Image
               source={{ uri: capturedPhoto }}
-              style={{ width: "100%", height: "65%", borderRadius: 20 }}
+              style={{ width: 270, height: 360, borderRadius: 20 }}
             />
+            <View style={{marginTop:20}}>
+              <UserDetailsField field={newUser.firstName} />
+              <UserDetailsField field={newUser.lastName} />
+              <UserDetailsField field={newUser.accessLevel} />
+            </View>
+
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity
                 style={{ marginVertical: 30, marginHorizontal: 70 }}
