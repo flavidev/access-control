@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const UserDetails = (props) => {
+const UserDetailsField = (props) => {
   return (
     <View
       style={{
@@ -28,4 +28,4 @@ const UserDetails = (props) => {
   );
 };
 
-export default UserDetails;
+export default UserDetailsField;

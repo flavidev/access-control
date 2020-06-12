@@ -7,7 +7,7 @@ const initialState = {
       firstName: "Flavio",
       lastName: "Vieira",
       accessLevel: "A1",
-      userPhoto: "",
+      userPhoto: ""
     },
     {
       key: "1001",

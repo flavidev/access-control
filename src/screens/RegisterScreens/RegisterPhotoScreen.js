@@ -53,10 +53,10 @@ function RegisterPhotoScreen({ route, navigation }) {
     const asset = await MediaLibrary.createAssetAsync(photo);
     const asset_info = await MediaLibrary.getAssetInfoAsync(asset);
     newUser.userPhoto = asset_info.localUri;
-    reviewUserDetails();
+    createAndReviewUserDetails();
   }
 
-  function reviewUserDetails() {
+  function createAndReviewUserDetails() {
     navigation.navigate("CreateUserScreen", { newUser });
   }
 
