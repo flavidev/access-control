@@ -16,11 +16,15 @@ import UserDetailsBox from "../../components/UserDetailsBox";
 import { connect } from "react-redux";
 import { addUser, increaseCounter } from "../../actions/user";
 
-
-
-function RegisterPhotoScreen({ route, navigation, addUser, keyCounter, increaseCounter }) {
+function RegisterPhotoScreen({
+  route,
+  navigation,
+  addUser,
+  idCounter,
+  increaseCounter,
+}) {
   const newUser = {
-    key: keyCounter + 1,
+    id: idCounter + 1,
     firstName: route.params.firstName,
     lastName: route.params.lastName,
     accessLevel: route.params.accessLevel,
@@ -60,14 +64,15 @@ function RegisterPhotoScreen({ route, navigation, addUser, keyCounter, increaseC
     const asset = await MediaLibrary.createAssetAsync(photo);
     const asset_info = await MediaLibrary.getAssetInfoAsync(asset);
     //console.log(asset_info);
-    newUser.userPhoto =  asset_info.localUri;
+    newUser.userPhoto = asset_info.localUri;
     createAndReviewUserDetails();
   }
 
-   async function createAndReviewUserDetails() {
-    addUser(newUser)
-    increaseCounter(newUser.key)
-    await navigation.navigate("UserDetailsScreen", { newUser });
+  async function createAndReviewUserDetails() {
+    addUser(newUser);
+    increaseCounter(newUser.id);
+    let user = newUser;
+    await navigation.navigate("UserDetailsScreen", { user });
   }
 
   return (
@@ -140,6 +145,7 @@ function RegisterPhotoScreen({ route, navigation, addUser, keyCounter, increaseC
             />
             <View style={{ marginTop: 40 }}>
               <UserDetailsBox
+                id={newUser.id}
                 firstName={newUser.firstName}
                 lastName={newUser.lastName}
                 accessLevel={newUser.accessLevel}
@@ -184,15 +190,18 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    keyCounter: state.userReducer.keyCounter,
+    idCounter: state.userReducer.idCounter,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addUser: (user) => dispatch(addUser(user)),
-    increaseCounter: (counter)=>dispatch(increaseCounter(counter))
+    increaseCounter: (counter) => dispatch(increaseCounter(counter)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPhotoScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegisterPhotoScreen);

@@ -9,48 +9,36 @@ import {
 import Constants from "expo-constants";
 import { connect } from "react-redux";
 import { deleteUser } from "../../actions/user";
+import UserDetailsBox from "../../components/UserDetailsBox";
 
-function Item({ firstName, lastName, accessLevel }) {
+function Item({ firstName, lastName, accessLevel, id }) {
   return (
-    <View style={styles.item}>
-      <View style={styles.itemField}>
-        <Text style={styles.titleMenu}>First Name:</Text>
-        <Text style={styles.titleName}>{firstName}</Text>
-      </View>
-      <View style={styles.itemField}>
-        <Text style={styles.titleMenu}>Last Name:</Text>
-        <Text style={styles.titleName}>{lastName}</Text>
-      </View>
-      <View style={styles.itemField}>
-        <Text style={styles.titleMenu}>Access Level:</Text>
-        <Text style={styles.titleName}>{accessLevel}</Text>
-      </View>
-    </View>
+    <UserDetailsBox
+      firstName={firstName}
+      lastName={lastName}
+      accessLevel={accessLevel}
+      id={id}
+    />
   );
 }
 
-function userListScreen({ users, deleteUser }) {
+function userListScreen({ users, deleteUser, navigation }) {
   return (
     <View style={styles.container}>
       <FlatList
         data={users}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => deleteUser(item.key)}>
+          <TouchableOpacity onPress={() => deleteUser(item.id)}>
             <Item
+              id={item.id}
               firstName={item.firstName}
               lastName={item.lastName}
               accessLevel={item.accessLevel}
             />
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => `key:${item.key}`}
+        keyExtractor={(item) => `key:${item.id}`}
       />
-      <TouchableOpacity
-        onPress={() => console.log(users)}
-        style={{ marginBottom: 20, marginLeft: 10 }}
-      >
-        <Text>ConsoleLog</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -96,7 +84,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteUser: (key) => dispatch(deleteUser(key)),
+    deleteUser: (id) => dispatch(deleteUser(id)),
   };
 };
 

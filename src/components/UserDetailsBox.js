@@ -5,6 +5,10 @@ const UserDetailsBox = (props) => {
   return (
     <View style={styles.item}>
       <View style={styles.itemField}>
+        <Text style={styles.titleMenu}>ID:</Text>
+        <Text style={styles.titleName}>{props.id}</Text>
+      </View>
+      <View style={styles.itemField}>
         <Text style={styles.titleMenu}>First Name:</Text>
         <Text style={styles.titleName}>{props.firstName}</Text>
       </View>
@@ -23,7 +27,7 @@ const UserDetailsBox = (props) => {
 const styles = StyleSheet.create({
   item: {
     width: 350,
-    height: 100,
+    height: 150,
     backgroundColor: "#393e46",
     margin: 20,
     padding: 8,

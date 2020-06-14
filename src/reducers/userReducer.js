@@ -8,14 +8,14 @@ import {
 const initialState = {
   userList: [
     {
-      key: "1000",
+      id: "1000",
       firstName: "Flavio",
       lastName: "Vieira",
       accessLevel: "A1",
       userPhoto: "",
     },
     {
-      key: "1001",
+      id: "1001",
       firstName: "Ana Rosa",
       lastName: "Lemos",
       accessLevel: "VIP",
@@ -23,17 +23,16 @@ const initialState = {
     },
   ],
   selectedPhoto: "",
-  keyCounter: 1002,
+  idCounter: 1002,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_USER:
-      console.log(action.payload);
       return {
         ...state,
         userList: state.userList.concat({
-          key: action.payload.key,
+          id: action.payload.id,
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           accessLevel: action.payload.accessLevel,
@@ -43,7 +42,7 @@ const userReducer = (state = initialState, action) => {
     case DELETE_USER:
       return {
         ...state,
-        userList: state.userList.filter((item) => item.key !== action.payload),
+        userList: state.userList.filter((item) => item.id !== action.payload),
       };
     case SELECT_PHOTO:
       return {

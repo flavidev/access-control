@@ -5,9 +5,9 @@ export const addUser = (user) => ({
   payload: user,
 });
 
-export const deleteUser = (key) => ({
+export const deleteUser = (id) => ({
   type: DELETE_USER,
-  payload: key,
+  payload: id,
 });
 
 export const selectPhoto = (photo) => ({

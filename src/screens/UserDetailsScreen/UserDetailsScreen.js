@@ -8,13 +8,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { deleteUser } from "../../actions/user";
 
-const UserDetailsScreen = ({ navigation, route, deleteUser }) => {
-  const newUser = route.params.newUser;
+const UserDetailsScreen = ({ navigation, route, deleteUser, users }) => {
+  const user = users.find((x) => x.id === route.params.user.id);
+
+  //const user = route.params.user;
 
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: route.params.newUser.userPhoto }}
+        source={{ uri: user.userPhoto }}
         style={{
           height: 360,
           width: 270,
@@ -23,15 +25,22 @@ const UserDetailsScreen = ({ navigation, route, deleteUser }) => {
           transform: [{ rotateY: "180deg" }],
         }}
       />
+
       <UserDetailsBox
-        firstName={newUser.firstName}
-        lastName={newUser.lastName}
-        accessLevel={newUser.accessLevel}
+        id={user.id}
+        firstName={user.firstName}
+        lastName={user.lastName}
+        accessLevel={user.accessLevel}
       />
 
       <View style={{ flexDirection: "row", flex: 1, marginTop: 50 }}>
         <TouchableOpacity
-          onPress={() => (deleteUser(newUser.key), navigation.navigate("RegistrationFormScreen"))}
+          onPress={() => (
+            navigation.navigate("RegistrationFormScreen"),
+            setTimeout(() => {
+              deleteUser(user.id);
+            }, 1000)
+          )}
         >
           <Ionicons
             name="ios-trash"
@@ -54,6 +63,7 @@ const UserDetailsScreen = ({ navigation, route, deleteUser }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -71,7 +81,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteUser: (key) => dispatch(deleteUser(key)),
+    deleteUser: (id) => dispatch(deleteUser(id)),
   };
 };
 
