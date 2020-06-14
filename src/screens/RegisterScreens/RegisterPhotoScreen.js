@@ -11,20 +11,27 @@ import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
+import UserDetailsBox from "../../components/UserDetailsBox";
 
-export default function PhotoBooth() {
+function RegisterPhotoScreen({ route, navigation }) {
+  const newUser = {
+    firstName: route.params.firstName,
+    lastName: route.params.lastName,
+    accessLevel: route.params.accessLevel,
+  };
+
   const camRef = useRef(null);
   const isFocused = useIsFocused();
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [capturedPhoto, setCapturedPhoto] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
-  const [savedPhotoURI, setSavedPhotoURI] = useState("")
 
   useEffect(() => {
     (async () => {
-      const { status } = (await Camera.requestPermissionsAsync(), await MediaLibrary.requestPermissionsAsync()
-      );
+      const { status } =
+        (await Camera.requestPermissionsAsync(),
+        await MediaLibrary.requestPermissionsAsync());
       setHasPermission(status === "granted");
     })();
   }, []);
@@ -41,19 +48,24 @@ export default function PhotoBooth() {
     const data = await camRef.current.takePictureAsync();
     setCapturedPhoto(data.uri);
     setOpenPreview(true);
-    }
+  }
 
-    async function saveToGallery(photo){
-      const asset = await MediaLibrary.createAssetAsync(photo);
-      const asset_info = await MediaLibrary.getAssetInfoAsync(asset)
-      setSavedPhotoURI(asset_info.localUri)
-      console.log(savedPhotoURI)
-    }
+  async function saveToGallery(photo) {
+    const asset = await MediaLibrary.createAssetAsync(photo);
+    const asset_info = await MediaLibrary.getAssetInfoAsync(asset);
+    console.log(asset_info);
+    newUser.userPhoto = asset_info.localUri;
+    createAndReviewUserDetails();
+  }
+
+  function createAndReviewUserDetails() {
+    navigation.navigate("CreateUserScreen", { newUser });
+  }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, justifyContent: "center" }}>
       {isFocused && (
-        <Camera style={{ flex: 0.8 }} type={type} ref={camRef}>
+        <Camera style={{ flex: 1 }} type={type} ref={camRef}>
           <View
             style={{
               flex: 1,
@@ -85,13 +97,14 @@ export default function PhotoBooth() {
           </View>
         </Camera>
       )}
-
-      <TouchableOpacity
-        style={styles.cameraButtonContainer}
-        onPress={takePicture}
-      >
-        <Ionicons name="ios-camera" size={50} color="white" />
-      </TouchableOpacity>
+      <View style={{ alignContent: "flex-start" }}>
+        <TouchableOpacity
+          style={styles.cameraButtonContainer}
+          onPress={takePicture}
+        >
+          <Ionicons name="ios-camera" size={50} color="white" />
+        </TouchableOpacity>
+      </View>
 
       {capturedPhoto && (
         <Modal animationType="slide" transparent={false} visible={openPreview}>
@@ -105,8 +118,26 @@ export default function PhotoBooth() {
           >
             <Image
               source={{ uri: capturedPhoto }}
-              style={{ width: "100%", height: "65%", borderRadius: 20 }}
+              style={{
+                width: 270,
+                height: 360,
+                borderRadius: 20,
+
+                // fix inverted image preview when using front camera
+                transform:
+                  type === Camera.Constants.Type.back
+                    ? [{ rotateY: "0deg" }]
+                    : [{ rotateY: "180deg" }],
+              }}
             />
+            <View style={{ marginTop: 40 }}>
+              <UserDetailsBox
+                firstName={newUser.firstName}
+                lastName={newUser.lastName}
+                accessLevel={newUser.accessLevel}
+              />
+            </View>
+
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity
                 style={{ marginVertical: 30, marginHorizontal: 70 }}
@@ -116,7 +147,9 @@ export default function PhotoBooth() {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{ marginVertical: 30, marginHorizontal: 70 }}
-                onPress={() => (saveToGallery(capturedPhoto), setOpenPreview(false))}
+                onPress={() => (
+                  saveToGallery(capturedPhoto), setOpenPreview(false)
+                )}
               >
                 <Ionicons name="ios-checkmark-circle" size={50} color="green" />
               </TouchableOpacity>
@@ -134,7 +167,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#00adb5",
     margin: 20,
+
     borderRadius: 10,
     height: 50,
   },
 });
+
+export default RegisterPhotoScreen;

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import { connect } from "react-redux";
-import { deleteUser } from "../src/actions/user";
+import { deleteUser } from "../../actions/user";
 
 function Item({ firstName, lastName, accessLevel }) {
   return (
@@ -29,7 +29,7 @@ function Item({ firstName, lastName, accessLevel }) {
   );
 }
 
-function Edit({ users, deleteUser }) {
+function userListScreen({ users, deleteUser }) {
   return (
     <View style={styles.container}>
       <FlatList
@@ -45,7 +45,10 @@ function Edit({ users, deleteUser }) {
         )}
         keyExtractor={(item) => `key:${item.key}`}
       />
-      <TouchableOpacity onPress={() => console.log(users)} style={{marginBottom:20, marginLeft:10}}>
+      <TouchableOpacity
+        onPress={() => console.log(users)}
+        style={{ marginBottom: 20, marginLeft: 10 }}
+      >
         <Text>ConsoleLog</Text>
       </TouchableOpacity>
     </View>
@@ -67,30 +70,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   itemField: {
-    flex:1,
+    flex: 1,
     flexDirection: "row",
-    justifyContent:"center",
-
+    justifyContent: "center",
   },
   titleMenu: {
-    flex:0.6,
+    flex: 0.6,
     fontSize: 18,
     color: "#00adb5",
-    
   },
   titleName: {
-    flex:1,
+    flex: 1,
     fontSize: 18,
     fontWeight: "bold",
     color: "white",
-    
   },
 });
 
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    users: state.usersReducer.userList,
+    users: state.userReducer.userList,
   };
 };
 
@@ -100,4 +100,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Edit);
+export default connect(mapStateToProps, mapDispatchToProps)(userListScreen);
