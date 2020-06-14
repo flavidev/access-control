@@ -5,43 +5,52 @@ import Constants from "expo-constants";
 import UserDetailsBox from "../../components/UserDetailsBox";
 import { Ionicons } from "@expo/vector-icons";
 
-const UserDetailsScreen = ({ navigation, route }) => {
+import { connect } from "react-redux";
+import { deleteUser } from "../../actions/user";
 
-  const newUser = route.params.newUser
+const UserDetailsScreen = ({ navigation, route, deleteUser }) => {
+  const newUser = route.params.newUser;
 
   return (
     <View style={styles.container}>
       <Image
         source={{ uri: route.params.newUser.userPhoto }}
-        style={{ height: 360, width: 270, borderRadius: 14, marginBottom:20,
-          transform: [{ rotateY: '180deg' }]
+        style={{
+          height: 360,
+          width: 270,
+          borderRadius: 14,
+          marginBottom: 20,
+          transform: [{ rotateY: "180deg" }],
         }}
-        
       />
-              <UserDetailsBox
-                firstName={newUser.firstName}
-                lastName={newUser.lastName}
-                accessLevel={newUser.accessLevel}
-              />
+      <UserDetailsBox
+        firstName={newUser.firstName}
+        lastName={newUser.lastName}
+        accessLevel={newUser.accessLevel}
+      />
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate("RegistrationFormScreen")}
-      >
-        <View style={{ flexDirection: "row", flex: 1, marginTop: 50 }}>
+      <View style={{ flexDirection: "row", flex: 1, marginTop: 50 }}>
+        <TouchableOpacity
+          onPress={() => (deleteUser(newUser.key), navigation.navigate("RegistrationFormScreen"))}
+        >
           <Ionicons
             name="ios-trash"
             size={50}
             color="red"
             style={{ marginHorizontal: 80 }}
           />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("RegistrationFormScreen")}
+        >
           <Ionicons
             name="ios-undo"
             size={50}
             color="#393e46"
             style={{ marginHorizontal: 80 }}
           />
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -53,4 +62,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserDetailsScreen;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    users: state.userReducer.userList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteUser: (key) => dispatch(deleteUser(key)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetailsScreen);
