@@ -2,7 +2,7 @@ import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import RegistrationFormScreen from "../screens/RegisterScreens/RegistrationFormScreen";
 import RegisterPhotoScreen from "../screens/RegisterScreens/RegisterPhotoScreen";
-import CreateUserScreen from "../screens/RegisterScreens/CreateUserScreen";
+import UserDetailsScreen from "../screens/UserDetailsScreen/UserDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -17,7 +17,7 @@ function RegisterStack() {
         name="RegisterPhotoScreen"
         component={RegisterPhotoScreen}
       />
-      <Stack.Screen name="CreateUserScreen" component={CreateUserScreen} />
+      <Stack.Screen name="UserDetailsScreen" component={UserDetailsScreen} />
     </Stack.Navigator>
   );
 }

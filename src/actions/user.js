@@ -15,3 +15,4 @@ export const selectPhoto = (photo) => ({
   type: SELECT_PHOTO,
   payload: photo,
 });
+

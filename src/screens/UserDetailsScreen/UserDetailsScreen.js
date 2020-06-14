@@ -5,7 +5,7 @@ import Constants from "expo-constants";
 import UserDetailsBox from "../../components/UserDetailsBox";
 import { Ionicons } from "@expo/vector-icons";
 
-const CreateUserScreen = ({ navigation, route }) => {
+const UserDetailsScreen = ({ navigation, route }) => {
 
   const newUser = route.params.newUser
 
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateUserScreen;
+export default UserDetailsScreen;

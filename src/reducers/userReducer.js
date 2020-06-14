@@ -18,6 +18,7 @@ const initialState = {
     },
   ],
   selectedPhoto: "",
+  keyCounter:1000
 };
 
 const userReducer = (state = initialState, action) => {
@@ -27,7 +28,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         userList: state.userList.concat({
-          key: Math.random().toString().slice(2),
+          key: action.payload.key,
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           accessLevel: action.payload.accessLevel,
@@ -36,7 +37,7 @@ const userReducer = (state = initialState, action) => {
     case DELETE_USER:
       return {
         ...state,
-        userList: state.userList.filter((item) => item.key !== action.key),
+        userList: state.userList.filter((item) => item.key !== action.payload),
       };
     case SELECT_PHOTO:
       return {

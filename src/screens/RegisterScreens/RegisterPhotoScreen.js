@@ -13,8 +13,14 @@ import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
 import UserDetailsBox from "../../components/UserDetailsBox";
 
-function RegisterPhotoScreen({ route, navigation }) {
+import { connect } from "react-redux";
+import { addUser } from "../../actions/user";
+
+
+
+function RegisterPhotoScreen({ route, navigation, addUser }) {
   const newUser = {
+    key: Math.random().toString().slice(2),
     firstName: route.params.firstName,
     lastName: route.params.lastName,
     accessLevel: route.params.accessLevel,
@@ -53,13 +59,14 @@ function RegisterPhotoScreen({ route, navigation }) {
   async function saveToGallery(photo) {
     const asset = await MediaLibrary.createAssetAsync(photo);
     const asset_info = await MediaLibrary.getAssetInfoAsync(asset);
-    console.log(asset_info);
-    newUser.userPhoto = asset_info.localUri;
+    //console.log(asset_info);
+    newUser.userPhoto =  asset_info.localUri;
     createAndReviewUserDetails();
   }
 
   function createAndReviewUserDetails() {
-    navigation.navigate("CreateUserScreen", { newUser });
+    addUser(newUser)
+    navigation.navigate("UserDetailsScreen", { newUser });
   }
 
   return (
@@ -173,4 +180,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterPhotoScreen;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    users: state.userReducer.userList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addUser: (user) => dispatch(addUser(user)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPhotoScreen);
