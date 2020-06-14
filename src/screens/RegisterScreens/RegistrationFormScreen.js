@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Text, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Constants from "expo-constants";
 import { Picker } from "@react-native-community/picker";
+
 
 const RegistrationFormScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
@@ -11,9 +11,10 @@ const RegistrationFormScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image 
-      source={require("../../../assets/image.png")}
-      style={{height:200, width:200, marginBottom:30, borderRadius:14}}
+
+      <Image
+        source={require("../../../assets/image.png")}
+        style={{ height: 200, width: 200, marginBottom: 30, borderRadius: 14 }}
       />
       <TextInput
         style={styles.input}
@@ -31,7 +32,7 @@ const RegistrationFormScreen = ({ navigation }) => {
         placeholderTextColor="white"
         onChangeText={(text) => setLastName(text)}
       />
- <View
+      <View
         style={{
           width: 350,
           height: 55,
@@ -40,13 +41,12 @@ const RegistrationFormScreen = ({ navigation }) => {
           borderRadius: 14,
           borderWidth: 1,
           backgroundColor: "#393e46",
-          justifyContent:"center",
+          justifyContent: "center",
         }}
       >
         <Picker
           selectedValue={accessLevel}
           style={{
-
             color: "white",
           }}
           onValueChange={(itemValue, itemIndex) => setAccessLevel(itemValue)}
@@ -62,7 +62,11 @@ const RegistrationFormScreen = ({ navigation }) => {
       <TouchableOpacity
         onPress={() =>
           firstName !== "" && lastName !== "" && accessLevel !== ""
-            ? navigation.navigate("RegisterPhotoScreen", {firstName,lastName,accessLevel})
+            ? navigation.navigate("RegisterPhotoScreen", {
+                firstName,
+                lastName,
+                accessLevel,
+              })
             : alert("Please fill all the fields")
         }
       >
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "white",
-    justifyContent:"center"
+    justifyContent: "center",
   },
   input: {
     width: 350,

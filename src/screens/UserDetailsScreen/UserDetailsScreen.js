@@ -9,13 +9,18 @@ import { connect } from "react-redux";
 import { deleteUser } from "../../actions/user";
 
 const UserDetailsScreen = ({ navigation, route, deleteUser, users }) => {
-  const user = users.find((x) => x.id === route.params.user.id);
+  let userId = route.params.item
+    ? route.params.item.id
+    : route.params.user.id;
+  const user = users.find((x) => x.id === userId);
 
   //const user = route.params.user;
 
   return (
     <View style={styles.container}>
-      <Image
+      {user.userPhoto && (
+
+        <Image
         source={{ uri: user.userPhoto }}
         style={{
           height: 360,
@@ -24,7 +29,8 @@ const UserDetailsScreen = ({ navigation, route, deleteUser, users }) => {
           marginBottom: 20,
           transform: [{ rotateY: "180deg" }],
         }}
-      />
+        />
+        )}
 
       <UserDetailsBox
         id={user.id}
@@ -36,7 +42,7 @@ const UserDetailsScreen = ({ navigation, route, deleteUser, users }) => {
       <View style={{ flexDirection: "row", flex: 1, marginTop: 50 }}>
         <TouchableOpacity
           onPress={() => (
-            navigation.navigate("RegistrationFormScreen"),
+            navigation.goBack(),
             setTimeout(() => {
               deleteUser(user.id);
             }, 1000)
@@ -50,7 +56,7 @@ const UserDetailsScreen = ({ navigation, route, deleteUser, users }) => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("RegistrationFormScreen")}
+          onPress={() => navigation.goBack()}
         >
           <Ionicons
             name="ios-undo"

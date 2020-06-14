@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   userList: [
-    {
+/*    {
       id: "1000",
       firstName: "Flavio",
       lastName: "Vieira",
@@ -20,10 +20,10 @@ const initialState = {
       lastName: "Lemos",
       accessLevel: "VIP",
       userPhoto: "",
-    },
+    },*/
   ],
   selectedPhoto: "",
-  idCounter: 1002,
+  idCounter: 1000,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -52,7 +52,7 @@ const userReducer = (state = initialState, action) => {
     case INCREASE_COUNTER:
       return {
         ...state,
-        keyCounter: action.payload,
+        idCounter: action.payload,
       };
     default:
       return state;

@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { deleteUser } from "../../actions/user";
 import UserDetailsBox from "../../components/UserDetailsBox";
 
+
 function Item({ firstName, lastName, accessLevel, id }) {
   return (
     <UserDetailsBox
@@ -22,13 +23,13 @@ function Item({ firstName, lastName, accessLevel, id }) {
   );
 }
 
-function userListScreen({ users, deleteUser, navigation }) {
+function userListScreen({ users, navigation }) {
   return (
     <View style={styles.container}>
       <FlatList
         data={users}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => deleteUser(item.id)}>
+          <TouchableOpacity onPress={() => navigation.navigate("UserDetailsScreen", {item})}>
             <Item
               id={item.id}
               firstName={item.firstName}
