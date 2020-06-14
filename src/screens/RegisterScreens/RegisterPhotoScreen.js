@@ -14,7 +14,7 @@ import * as MediaLibrary from "expo-media-library";
 import UserDetailsBox from "../../components/UserDetailsBox";
 
 import { connect } from "react-redux";
-import { addUser, increaseCounter } from "../../actions/user";
+import { addUser, increaseCounter, selectUser } from "../../actions/user";
 
 function RegisterPhotoScreen({
   route,
@@ -22,6 +22,7 @@ function RegisterPhotoScreen({
   addUser,
   idCounter,
   increaseCounter,
+  selectUser
 }) {
   const newUser = {
     id: idCounter + 1,
@@ -69,10 +70,10 @@ function RegisterPhotoScreen({
   }
 
   async function createAndReviewUserDetails() {
-    addUser(newUser);
-    increaseCounter(newUser.id);
-    let user = newUser;
-    await navigation.navigate("UserDetailsScreen", { user });
+    await addUser(newUser);
+    await selectUser(newUser.id)
+    await increaseCounter(newUser.id);
+    navigation.navigate("UserDetailsScreen");
   }
 
   return (
@@ -197,6 +198,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addUser: (user) => dispatch(addUser(user)),
+    selectUser: (id) => dispatch(selectUser(id)),
     increaseCounter: (counter) => dispatch(increaseCounter(counter)),
   };
 };

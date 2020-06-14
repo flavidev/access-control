@@ -8,9 +8,8 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import { connect } from "react-redux";
-import { deleteUser } from "../../actions/user";
+import { selectUser } from "../../actions/user";
 import UserDetailsBox from "../../components/UserDetailsBox";
-
 
 function Item({ firstName, lastName, accessLevel, id }) {
   return (
@@ -23,13 +22,18 @@ function Item({ firstName, lastName, accessLevel, id }) {
   );
 }
 
-function userListScreen({ users, navigation }) {
+function userListScreen({ users, navigation, selectUser, selectedUser }) {
   return (
     <View style={styles.container}>
       <FlatList
         data={users}
+        keyExtractor={(item) => `key:${item.id}`}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate("UserDetailsScreen", {item})}>
+          <TouchableOpacity
+            onPress={() => (
+              selectUser(item.id), navigation.navigate("UserDetailsScreen")
+            )}
+          >
             <Item
               id={item.id}
               firstName={item.firstName}
@@ -38,7 +42,6 @@ function userListScreen({ users, navigation }) {
             />
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => `key:${item.id}`}
       />
     </View>
   );
@@ -80,12 +83,13 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     users: state.userReducer.userList,
+    selectedUser: state.userReducer.selectedUser,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteUser: (id) => dispatch(deleteUser(id)),
+    selectUser: (id) => dispatch(selectUser(id)),
   };
 };
 

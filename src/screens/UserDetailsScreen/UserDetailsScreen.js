@@ -8,29 +8,27 @@ import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { deleteUser } from "../../actions/user";
 
-const UserDetailsScreen = ({ navigation, route, deleteUser, users }) => {
-  let userId = route.params.item
-    ? route.params.item.id
-    : route.params.user.id;
-  const user = users.find((x) => x.id === userId);
+const UserDetailsScreen = ({ navigation, deleteUser, users, selectedUser }) => {
+  const user = users.find((x) => x.id === selectedUser);
 
-  //const user = route.params.user;
+  if (!user) {
+    return <View />;
+  }
 
   return (
     <View style={styles.container}>
       {user.userPhoto && (
-
         <Image
-        source={{ uri: user.userPhoto }}
-        style={{
-          height: 360,
-          width: 270,
-          borderRadius: 14,
-          marginBottom: 20,
-          transform: [{ rotateY: "180deg" }],
-        }}
+          source={{ uri: user.userPhoto }}
+          style={{
+            height: 360,
+            width: 270,
+            borderRadius: 14,
+            marginBottom: 20,
+            transform: [{ rotateY: "180deg" }],
+          }}
         />
-        )}
+      )}
 
       <UserDetailsBox
         id={user.id}
@@ -41,11 +39,8 @@ const UserDetailsScreen = ({ navigation, route, deleteUser, users }) => {
 
       <View style={{ flexDirection: "row", flex: 1, marginTop: 50 }}>
         <TouchableOpacity
-          onPress={() => (
-            navigation.goBack(),
-            setTimeout(() => {
-              deleteUser(user.id);
-            }, 1000)
+          onPress={async () => (
+            await deleteUser(user.id), navigation.navigate("UserListScreen")
           )}
         >
           <Ionicons
@@ -55,9 +50,7 @@ const UserDetailsScreen = ({ navigation, route, deleteUser, users }) => {
             style={{ marginHorizontal: 80 }}
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("UserListScreen")}>
           <Ionicons
             name="ios-undo"
             size={50}
@@ -82,6 +75,7 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     users: state.userReducer.userList,
+    selectedUser: state.userReducer.selectedUser,
   };
 };
 
