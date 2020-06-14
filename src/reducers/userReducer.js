@@ -1,4 +1,9 @@
-import { ADD_USER, DELETE_USER, SELECT_PHOTO } from "../actions/types";
+import {
+  ADD_USER,
+  DELETE_USER,
+  SELECT_PHOTO,
+  INCREASE_COUNTER,
+} from "../actions/types";
 
 const initialState = {
   userList: [
@@ -7,7 +12,7 @@ const initialState = {
       firstName: "Flavio",
       lastName: "Vieira",
       accessLevel: "A1",
-      userPhoto: ""
+      userPhoto: "",
     },
     {
       key: "1001",
@@ -18,7 +23,7 @@ const initialState = {
     },
   ],
   selectedPhoto: "",
-  keyCounter:1000
+  keyCounter: 1002,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -32,6 +37,7 @@ const userReducer = (state = initialState, action) => {
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           accessLevel: action.payload.accessLevel,
+          userPhoto: action.payload.userPhoto
         }),
       };
     case DELETE_USER:
@@ -43,6 +49,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedPhoto: action.payload,
+      };
+    case INCREASE_COUNTER:
+      return {
+        ...state,
+        keyCounter: action.payload,
       };
     default:
       return state;

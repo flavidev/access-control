@@ -1,14 +1,13 @@
-import { ADD_USER, DELETE_USER, SELECT_PHOTO } from "./types";
+import { ADD_USER, DELETE_USER, SELECT_PHOTO, INCREASE_COUNTER } from "./types";
 
 export const addUser = (user) => ({
   type: ADD_USER,
-  payload: user
+  payload: user,
 });
 
 export const deleteUser = (key) => ({
   type: DELETE_USER,
   payload: key,
-
 });
 
 export const selectPhoto = (photo) => ({
@@ -16,3 +15,7 @@ export const selectPhoto = (photo) => ({
   payload: photo,
 });
 
+export const increaseCounter = (counter) => ({
+  type: INCREASE_COUNTER,
+  payload: counter
+});

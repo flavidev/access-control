@@ -14,13 +14,13 @@ import * as MediaLibrary from "expo-media-library";
 import UserDetailsBox from "../../components/UserDetailsBox";
 
 import { connect } from "react-redux";
-import { addUser } from "../../actions/user";
+import { addUser, increaseCounter } from "../../actions/user";
 
 
 
-function RegisterPhotoScreen({ route, navigation, addUser }) {
+function RegisterPhotoScreen({ route, navigation, addUser, keyCounter, increaseCounter }) {
   const newUser = {
-    key: Math.random().toString().slice(2),
+    key: keyCounter + 1,
     firstName: route.params.firstName,
     lastName: route.params.lastName,
     accessLevel: route.params.accessLevel,
@@ -64,9 +64,10 @@ function RegisterPhotoScreen({ route, navigation, addUser }) {
     createAndReviewUserDetails();
   }
 
-  function createAndReviewUserDetails() {
+   async function createAndReviewUserDetails() {
     addUser(newUser)
-    navigation.navigate("UserDetailsScreen", { newUser });
+    increaseCounter(newUser.key)
+    await navigation.navigate("UserDetailsScreen", { newUser });
   }
 
   return (
@@ -183,13 +184,14 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    users: state.userReducer.userList,
+    keyCounter: state.userReducer.keyCounter,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addUser: (user) => dispatch(addUser(user)),
+    increaseCounter: (counter)=>dispatch(increaseCounter(counter))
   };
 };
 
