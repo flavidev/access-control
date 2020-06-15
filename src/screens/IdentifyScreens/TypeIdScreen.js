@@ -8,11 +8,19 @@ import Constants from "expo-constants";
 import { connect } from "react-redux";
 import { selectUser } from "../../actions/user";
 
-const TypeIdScreen = ({ navigation, selectedUser, users }) => {
+const TypeIdScreen = ({ navigation, selectUser, users }) => {
   const [userId, setUserId] = useState("");
 
   function handleSubmit() {
-    // navigate to photoscreen
+    let user;
+    //check if entry is valid and if user exists
+    userId.length < 4
+      ? alert("Please enter a valid ID")
+      : (user = users.find((x) => x.id == userId));
+
+    !user
+      ? alert("User not found!")
+      : (selectUser(parseInt(userId)), navigation.navigate("CheckFaceScreen"));
   }
 
   return (
@@ -106,7 +114,7 @@ const TypeIdScreen = ({ navigation, selectedUser, users }) => {
             <NumberInput number={0} />
           </TouchableOpacity>
           <View style={styles.iconContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => handleSubmit()}>
               <Ionicons name="md-contact" size={50} color="#00adb5" />
             </TouchableOpacity>
           </View>
@@ -128,10 +136,9 @@ const styles = StyleSheet.create({
     width: 330,
     borderRadius: 14,
     marginVertical: 30,
-    flex:0.3,
-    alignItems:"center",
-    justifyContent:"center"
-
+    flex: 0.3,
+    alignItems: "center",
+    justifyContent: "center",
   },
   numRowView: {
     flexDirection: "row",
@@ -150,7 +157,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     users: state.userReducer.userList,
-    selectedUser: state.userReducer.selectedUser,
   };
 };
 

@@ -63,4 +63,4 @@ buck-out/
 web-build/
 
 # API Private info
-api_personal.js
+credentials.js
