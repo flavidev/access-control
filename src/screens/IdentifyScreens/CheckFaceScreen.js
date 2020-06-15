@@ -7,7 +7,7 @@ const CheckFaceScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("IdentifiedUserDetailsScreen")}
+        onPress={() => navigation.navigate("UserDetailsScreen")}
       >
         <Text>CheckFaceScreen</Text>
       </TouchableOpacity>

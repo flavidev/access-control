@@ -18,7 +18,7 @@ export default function AccessControl() {
             if (route.name === "Register") {
               iconName = "ios-add-circle";
             } else if (route.name === "Identify") {
-              iconName = "ios-qr-scanner";
+              iconName = "md-contact";
             } else if (route.name === "Edit") {
               iconName = "ios-list-box";
             }
