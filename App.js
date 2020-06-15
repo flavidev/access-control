@@ -2,14 +2,18 @@ import * as React from "react";
 import AccessControl from "./AccessControl";
 import { Provider } from "react-redux";
 
-import configureStore from './src/store';
+import { PersistGate } from "redux-persist/es/integration/react";
+import configureStore from "./src/store";
 
-const store = configureStore();
+const store = configureStore().store;
+const persistor = configureStore().persistor;
 
 export default function App() {
   return (
     <Provider store={store}>
-      <AccessControl />
+      <PersistGate load={null} persistor={persistor}>
+        <AccessControl />
+      </PersistGate>
     </Provider>
   );
 }

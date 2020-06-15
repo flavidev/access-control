@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     users: state.userReducer.userList,
     selectedUser: state.userReducer.selectedUser,

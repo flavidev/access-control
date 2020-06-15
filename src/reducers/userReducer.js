@@ -6,22 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  userList: [
-    /*    {
-      id: "1000",
-      firstName: "Flavio",
-      lastName: "Vieira",
-      accessLevel: "A1",
-      userPhoto: "",
-    },
-    {
-      id: "1001",
-      firstName: "Ana Rosa",
-      lastName: "Lemos",
-      accessLevel: "VIP",
-      userPhoto: "",
-    },*/
-  ],
+  userList: [],
   selectedUser: null,
   idCounter: 1000,
 };
