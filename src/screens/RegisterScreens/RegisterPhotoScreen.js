@@ -12,6 +12,8 @@ import { useIsFocused } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
 import UserDetailsBox from "../../components/UserDetailsBox";
+import Constants from "expo-constants";
+
 
 import { connect } from "react-redux";
 import { addUser, increaseCounter, selectUser } from "../../actions/user";
@@ -77,7 +79,7 @@ function RegisterPhotoScreen({
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
+    <View style={{ flex: 1, justifyContent: "center", marginTop:Constants.statusBarHeight }}>
       {isFocused && (
         <Camera style={{ flex: 1 }} type={type} ref={camRef}>
           <View

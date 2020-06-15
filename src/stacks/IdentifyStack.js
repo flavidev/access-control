@@ -9,11 +9,49 @@ const Stack = createStackNavigator();
 function IdentifyStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="TypeIdScreen" component={TypeIdScreen} />
-      <Stack.Screen name="CheckFaceScreen" component={CheckFaceScreen} />
+      <Stack.Screen name="TypeIdScreen" component={TypeIdScreen}
+      options={{
+        title: 'Type User ID',
+        headerTitleAlign:"center",
+        headerStyle: {
+          backgroundColor: '#393e46',
+          
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: "500",    
+        },
+      }}
+      />
+      <Stack.Screen name="CheckFaceScreen" component={CheckFaceScreen} 
+      options={{
+        title: 'Face Scanner',
+        headerTitleAlign:"center",
+        headerStyle: {
+          backgroundColor: '#393e46',
+          
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: "500",    
+        },
+      }}
+      />
       <Stack.Screen
         name="UserDetailsScreen"
         component={UserDetailsScreen}
+        options={{
+          title: 'User Details',
+          headerTitleAlign:"center",
+          headerStyle: {
+            backgroundColor: '#393e46',
+            
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: "500",    
+          },
+        }}
       />
     </Stack.Navigator>
   );

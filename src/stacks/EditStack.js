@@ -7,10 +7,35 @@ const Stack = createStackNavigator();
 function EditStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="UserListScreen" component={UserListScreen} />
+      <Stack.Screen name="UserListScreen" component={UserListScreen}
+      options={{
+        title: 'Active users',
+        headerTitleAlign:"center",
+        headerStyle: {
+          backgroundColor: '#393e46',
+          
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: "500",    
+        },
+      }}
+      />
       <Stack.Screen
         name="UserDetailsScreen"
         component={UserDetailsScreen}
+        options={{
+          title: 'User Details',
+          headerTitleAlign:"center",
+          headerStyle: {
+            backgroundColor: '#393e46',
+            
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: "500",    
+          },
+        }}
       />
     </Stack.Navigator>
   );

@@ -17,34 +17,33 @@ const UserDetailsScreen = ({ navigation, deleteUser, users, selectedUser }) => {
 
   return (
     <View style={styles.container}>
-      {user.userPhoto && (
-        <Image
-          source={{ uri: user.userPhoto }}
-          style={{
-            height: 360,
-            width: 270,
-            borderRadius: 14,
-            marginBottom: 20,
-            transform: [{ rotateY: "180deg" }],
-          }}
-        />
-      )}
-
-      <UserDetailsBox
-        id={user.id}
-        firstName={user.firstName}
-        lastName={user.lastName}
-        accessLevel={user.accessLevel}
+      <Image
+        source={{ uri: user.userPhoto }}
+        style={{
+          height: 360,
+          width: 270,
+          borderRadius: 14,
+          marginVertical: 20,
+          transform: [{ rotateY: "180deg" }],
+        }}
       />
+      <View style={{ flex:1 }}>
+        <UserDetailsBox
+          id={user.id}
+          firstName={user.firstName}
+          lastName={user.lastName}
+          accessLevel={user.accessLevel}
+        />
+      </View>
 
-      <View style={{ flexDirection: "row", flex: 1, marginTop: 50 }}>
+      <View style={{ flexDirection: "row", flex: 0.2, marginVertical: 50 }}>
         <TouchableOpacity
           onPress={async () => (
             await deleteUser(user.id), navigation.navigate("UserListScreen")
           )}
         >
           <Ionicons
-            name="ios-trash"
+            name="md-remove-circle"
             size={50}
             color="red"
             style={{ marginHorizontal: 80 }}
@@ -72,7 +71,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     users: state.userReducer.userList,
     selectedUser: state.userReducer.selectedUser,

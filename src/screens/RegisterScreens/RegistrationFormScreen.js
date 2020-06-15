@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Text, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Picker } from "@react-native-community/picker";
+import Constants from "expo-constants";
+
 
 
 const RegistrationFormScreen = ({ navigation }) => {
@@ -14,7 +16,7 @@ const RegistrationFormScreen = ({ navigation }) => {
 
       <Image
         source={require("../../../assets/image.png")}
-        style={{ height: 200, width: 200, marginBottom: 30, borderRadius: 14 }}
+        style={{ height: 230, width: 230, margin: 20, borderRadius: 14 }}
       />
       <TextInput
         style={styles.input}
@@ -79,7 +81,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "white",
     justifyContent: "center",
   },
   input: {

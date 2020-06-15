@@ -12,12 +12,49 @@ function RegisterStack() {
       <Stack.Screen
         name="RegistrationFormScreen"
         component={RegistrationFormScreen}
+        options={{
+          title: 'Registration Form',
+          headerTitleAlign:"center",
+          headerStyle: {
+            backgroundColor: '#393e46',
+            
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: "500",    
+          },
+        }}
       />
       <Stack.Screen
         name="RegisterPhotoScreen"
         component={RegisterPhotoScreen}
+        options={{
+          title: 'Registration Photo',
+          headerTitleAlign:"center",
+          headerStyle: {
+            backgroundColor: '#393e46',
+            
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: "500",    
+          },
+        }}
       />
-      <Stack.Screen name="UserDetailsScreen" component={UserDetailsScreen} />
+      <Stack.Screen name="UserDetailsScreen" component={UserDetailsScreen}
+      options={{
+        title: 'User Details',
+        headerTitleAlign:"center",
+        headerStyle: {
+          backgroundColor: '#393e46',
+          
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: "500",    
+        },
+      }}
+      />
     </Stack.Navigator>
   );
 }
