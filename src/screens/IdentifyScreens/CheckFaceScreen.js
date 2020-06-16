@@ -12,9 +12,10 @@ import { useIsFocused } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
 import Constants from "expo-constants";
-
 import { connect } from "react-redux";
-import API_KEY from "../../../credentials";
+import { RNS3 } from "react-native-aws3";
+
+import API_KEYS from "../../../credentials";
 
 function CheckFaceScreen({ navigation, selectedUser, users }) {
   const user = users.find((x) => x.id === selectedUser);
@@ -26,6 +27,8 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [capturedPhoto, setCapturedPhoto] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
+  const [inputPhotoURL, setInputPhotoURL] = useState("");
+  const [matchPhotoURL, setMatchPhotoURL] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -50,29 +53,47 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
     setOpenPreview(true);
   }
 
-  //Cloudwise API Call
-  async function compareFaces(inputPhoto, matchPhoto) {
-    const CloudmersiveImageApiClient = await require("cloudmersive-image-api-client");
-    const defaultClient = CloudmersiveImageApiClient.ApiClient.instance;
-
-    // Configure API key authorization: Apikey
-    const Apikey = await defaultClient.authentications["Apikey"];
-    Apikey.apiKey = API_KEY;
-
-    const apiInstance = new CloudmersiveImageApiClient.FaceApi();
-
-    let inputImage = Buffer.from(fs.readFileSync(inputPhoto).buffer); // File | Image file to perform the operation on; this image can contain one or more faces which will be matched against face provided in the second image.  Common file formats such as PNG, JPEG are supported.
-
-    let matchFace = Buffer.from(fs.readFileSync(matchPhoto).buffer); // File | Image of a single face to compare and match against.
-
-    let callback = function (error, data, response) {
-      if (error) {
-        console.error(error);
-      } else {
-        console.log("API called successfully. Returned data: " + data);
-      }
+  //Upload Photos to AWS Bucket
+  function uploadFaces(inputPhoto, matchPhoto) {
+    const fileInputPhoto = {
+      uri: inputPhoto,
+      name: "inputPhoto.jpg",
+      type: "image/jpg",
     };
-    return apiInstance.faceCompare(inputImage, matchFace, callback);
+
+    const fileMatchPhoto = {
+      uri: matchPhoto,
+      name: "matchPhoto.jpg",
+      type: "image/jpg",
+    };
+
+    const options = {
+      bucket: "access-control-cs50m-2020",
+      region: "us-east-2",
+      accessKey: API_KEYS.ACCESS,
+      secretKey: API_KEYS.SECRET,
+      successActionStatus: 201,
+    };
+
+    RNS3.put(fileInputPhoto, options).then((response) => {
+      if (response.status !== 201)
+        throw new Error("Failed to upload image to S3");
+      setInputPhotoURL(response.body.postResponse.location);
+    });
+
+    RNS3.put(fileMatchPhoto, options).then((response) => {
+      if (response.status !== 201)
+        throw new Error("Failed to upload image to S3");
+      setMatchPhotoURL(response.body.postResponse.location);
+    });
+
+    //console.log(inputPhotoURL, matchPhotoURL)
+    compareUploadedFaces();
+  }
+
+  async function compareUploadedFaces() {
+    // compare faces and return if it is the same person, alert or navigate to userdetails
+
   }
 
   return (
@@ -161,7 +182,8 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
               <TouchableOpacity
                 style={{ marginHorizontal: 80 }}
                 onPress={() => (
-                  compareFaces(user.userPhoto, capturedPhoto), setOpenPreview(false)
+                  uploadFaces(user.userPhoto, capturedPhoto),
+                  setOpenPreview(false)
                 )}
               >
                 <Ionicons name="ios-checkmark-circle" size={50} color="green" />
