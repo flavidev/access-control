@@ -10,12 +10,12 @@ import {
 import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import * as MediaLibrary from "expo-media-library";
 import Constants from "expo-constants";
-import { connect } from "react-redux";
-import { RNS3 } from "react-native-aws3";
 
-import API_KEYS from "../../../credentials";
+import * as MediaLibrary from "expo-media-library";
+import { connect } from "react-redux";
+
+import { uploadFaces } from "../../external_calls/";
 
 function CheckFaceScreen({ navigation, selectedUser, users }) {
   const user = users.find((x) => x.id === selectedUser);
@@ -27,8 +27,6 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [capturedPhoto, setCapturedPhoto] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
-  const [inputPhotoURL, setInputPhotoURL] = useState("");
-  const [matchPhotoURL, setMatchPhotoURL] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -51,49 +49,6 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
     const data = await camRef.current.takePictureAsync();
     setCapturedPhoto(data.uri);
     setOpenPreview(true);
-  }
-
-  //Upload Photos to AWS Bucket
-  function uploadFaces(inputPhoto, matchPhoto) {
-    const fileInputPhoto = {
-      uri: inputPhoto,
-      name: "inputPhoto.jpg",
-      type: "image/jpg",
-    };
-
-    const fileMatchPhoto = {
-      uri: matchPhoto,
-      name: "matchPhoto.jpg",
-      type: "image/jpg",
-    };
-
-    const options = {
-      bucket: "access-control-cs50m-2020",
-      region: "us-east-2",
-      accessKey: API_KEYS.ACCESS,
-      secretKey: API_KEYS.SECRET,
-      successActionStatus: 201,
-    };
-
-    RNS3.put(fileInputPhoto, options).then((response) => {
-      if (response.status !== 201)
-        throw new Error("Failed to upload image to S3");
-      setInputPhotoURL(response.body.postResponse.location);
-    });
-
-    RNS3.put(fileMatchPhoto, options).then((response) => {
-      if (response.status !== 201)
-        throw new Error("Failed to upload image to S3");
-      setMatchPhotoURL(response.body.postResponse.location);
-    });
-
-    //console.log(inputPhotoURL, matchPhotoURL)
-    compareUploadedFaces();
-  }
-
-  async function compareUploadedFaces() {
-    // compare faces and return if it is the same person, alert or navigate to userdetails
-
   }
 
   return (
@@ -182,8 +137,7 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
               <TouchableOpacity
                 style={{ marginHorizontal: 80 }}
                 onPress={() => (
-                  uploadFaces(user.userPhoto, capturedPhoto),
-                  setOpenPreview(false)
+                  uploadFaces(sourcePhoto, capturedPhoto), setOpenPreview(false)
                 )}
               >
                 <Ionicons name="ios-checkmark-circle" size={50} color="green" />
