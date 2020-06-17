@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { AppLoading } from "expo";
 import {
   Text,
   View,
@@ -7,6 +6,7 @@ import {
   StyleSheet,
   Modal,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
@@ -64,7 +64,11 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
   }
 
   if (!isReady) {
-    return <AppLoading />;
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="#00adb5" />
+      </View>
+    );
   }
 
   return (
