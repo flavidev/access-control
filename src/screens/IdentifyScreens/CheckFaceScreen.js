@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { AppLoading } from "expo";
 import {
   Text,
   View,
@@ -23,6 +24,7 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
 
   const camRef = useRef(null);
   const isFocused = useIsFocused();
+  const [isReady, setIsReady] = useState(true);
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [capturedPhoto, setCapturedPhoto] = useState(false);
@@ -49,6 +51,20 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
     const data = await camRef.current.takePictureAsync();
     setCapturedPhoto(data.uri);
     setOpenPreview(true);
+  }
+
+  async function handleSubmit() {
+    (await uploadFaces(sourcePhoto, capturedPhoto))
+      ? (setIsReady(true),
+        navigation.navigate("UserDetailsScreen"),
+        alert("Access Granted!"))
+      : (setIsReady(true),
+        navigation.navigate("TypeIdScreen"),
+        alert("Access Denied!"));
+  }
+
+  if (!isReady) {
+    return <AppLoading />;
   }
 
   return (
@@ -137,7 +153,7 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
               <TouchableOpacity
                 style={{ marginHorizontal: 80 }}
                 onPress={() => (
-                  uploadFaces(sourcePhoto, capturedPhoto), setOpenPreview(false)
+                  setOpenPreview(false), setIsReady(false), handleSubmit()
                 )}
               >
                 <Ionicons name="ios-checkmark-circle" size={50} color="green" />

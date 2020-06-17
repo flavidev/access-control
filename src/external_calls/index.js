@@ -1,10 +1,10 @@
 import API_KEYS from "../../credentials";
 import { RNS3 } from "react-native-aws3";
 
-let inputId = "";
-let matchId = "";
-
 export async function uploadFaces(inputPhoto, matchPhoto) {
+  let inputId = "";
+  let matchId = "";
+
   const fileInputPhoto = {
     uri: inputPhoto,
     name: `inputPhoto${Math.floor(Math.random() * 10000).toString()}.jpg`,
@@ -40,11 +40,7 @@ export async function uploadFaces(inputPhoto, matchPhoto) {
       console.log(response.body.postResponse.location);
     }
   );
-    getUserKeys(fileInputPhoto, fileMatchPhoto);
-}
 
-// Generating face ids inside Microsoft servers
-async function getUserKeys(fileInputPhoto, fileMatchPhoto) {
   paths = {
     requestURL:
       "https://brazilsouth.api.cognitive.microsoft.com/face/v1.0/detect",
@@ -83,10 +79,6 @@ async function getUserKeys(fileInputPhoto, fileMatchPhoto) {
   let responseJsonMatch = await responseMatch.json();
   matchId = responseJsonMatch[0].faceId;
 
-    compareFaces();
-}
-
-async function compareFaces() {
   let requestURL =
     "https://brazilsouth.api.cognitive.microsoft.com/face/v1.0/verify";
 
