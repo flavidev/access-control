@@ -4,16 +4,16 @@ import { RNS3 } from "react-native-aws3";
 let inputId = "";
 let matchId = "";
 
-export function uploadFaces(inputPhoto, matchPhoto) {
+export async function uploadFaces(inputPhoto, matchPhoto) {
   const fileInputPhoto = {
     uri: inputPhoto,
-    name: "inputPhoto.jpg",
+    name: `inputPhoto${Math.floor(Math.random() * 10000).toString()}.jpg`,
     type: "image/jpg",
   };
 
   const fileMatchPhoto = {
     uri: matchPhoto,
-    name: "matchPhoto.jpg",
+    name: `matchPhoto${Math.floor(Math.random() * 10000).toString()}.jpg`,
     type: "image/jpg",
   };
 
@@ -25,30 +25,32 @@ export function uploadFaces(inputPhoto, matchPhoto) {
     successActionStatus: 201,
   };
 
-  RNS3.put(fileInputPhoto, options).then((response) => {
-    if (response.status !== 201)
-      throw new Error("Failed to upload image to S3");
-    //console.log(response.body.postResponse.location);
-  });
+  const uploadInput = await RNS3.put(fileInputPhoto, options).then(
+    (response) => {
+      if (response.status !== 201)
+        throw new Error("Failed to upload image to S3");
+      console.log(response.body.postResponse.location);
+    }
+  );
 
-  RNS3.put(fileMatchPhoto, options).then((response) => {
-    if (response.status !== 201)
-      throw new Error("Failed to upload image to S3");
-    //console.log(response.body.postResponse.location);
-  });
-  setTimeout(() => {
-    getUserKeys();
-  }, 3000);
+  const uploadMatch = await RNS3.put(fileMatchPhoto, options).then(
+    (response) => {
+      if (response.status !== 201)
+        throw new Error("Failed to upload image to S3");
+      console.log(response.body.postResponse.location);
+    }
+  );
+    getUserKeys(fileInputPhoto, fileMatchPhoto);
 }
 
 // Generating face ids inside Microsoft servers
-export async function getUserKeys() {
+async function getUserKeys(fileInputPhoto, fileMatchPhoto) {
   paths = {
     requestURL:
       "https://brazilsouth.api.cognitive.microsoft.com/face/v1.0/detect",
-    input: "https://access-control-cs50m-2020.s3.amazonaws.com/inputPhoto.jpg",
+    input: `https://access-control-cs50m-2020.s3.amazonaws.com/${fileInputPhoto.name}`,
 
-    match: "https://access-control-cs50m-2020.s3.amazonaws.com/matchPhoto.jpg",
+    match: `https://access-control-cs50m-2020.s3.amazonaws.com/${fileMatchPhoto.name}`,
   };
 
   // Get input ID
@@ -81,9 +83,7 @@ export async function getUserKeys() {
   let responseJsonMatch = await responseMatch.json();
   matchId = responseJsonMatch[0].faceId;
 
-  setTimeout(() => {
     compareFaces();
-  }, 2000);
 }
 
 async function compareFaces() {

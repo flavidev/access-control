@@ -14,7 +14,7 @@ const TypeIdScreen = ({ navigation, selectUser, users }) => {
   function handleSubmit() {
     let user;
     //check if entry is valid and if user exists
-    userId.length < 4
+    userId.length < 4 
       ? alert("Please enter a valid ID")
       : (user = users.find((x) => x.id == userId));
 

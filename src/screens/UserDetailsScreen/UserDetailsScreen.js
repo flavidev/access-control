@@ -27,7 +27,7 @@ const UserDetailsScreen = ({ navigation, deleteUser, users, selectedUser }) => {
           transform: [{ rotateY: "180deg" }],
         }}
       />
-      <View style={{ flex:1 }}>
+      <View style={{ flex: 1 }}>
         <UserDetailsBox
           id={user.id}
           firstName={user.firstName}
