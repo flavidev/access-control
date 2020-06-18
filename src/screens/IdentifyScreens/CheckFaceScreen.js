@@ -26,7 +26,7 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
   const isFocused = useIsFocused();
   const [isReady, setIsReady] = useState(true);
   const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [type, setType] = useState(Camera.Constants.Type.front);
   const [capturedPhoto, setCapturedPhoto] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
 
@@ -66,7 +66,7 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
   if (!isReady) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
-        <ActivityIndicator size="large" color="#00adb5" />
+        <ActivityIndicator size={50} color="#00adb5" />
       </View>
     );
   }
