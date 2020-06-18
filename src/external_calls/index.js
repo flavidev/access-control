@@ -7,13 +7,13 @@ export async function uploadFaces(inputPhoto, matchPhoto) {
 
   const fileInputPhoto = {
     uri: inputPhoto,
-    name: `inputPhoto${Math.floor(Math.random() * 10000).toString()}.jpg`,
+    name: `inputPhoto${Math.floor(Math.random() * 1000000000000).toString()}.jpg`,
     type: "image/jpg",
   };
 
   const fileMatchPhoto = {
     uri: matchPhoto,
-    name: `matchPhoto${Math.floor(Math.random() * 10000).toString()}.jpg`,
+    name: `matchPhoto${Math.floor(Math.random() * 1000000000000).toString()}.jpg`,
     type: "image/jpg",
   };
 

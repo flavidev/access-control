@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Constants from "expo-constants";
 import UserDetailsBox from "../../components/UserDetailsBox";
@@ -39,7 +39,7 @@ const UserDetailsScreen = ({ navigation, deleteUser, users, selectedUser }) => {
       <View style={{ flexDirection: "row", flex: 0.2, marginVertical: 50 }}>
         <TouchableOpacity
           onPress={async () => (
-            await deleteUser(user.id), navigation.navigate("UserListScreen")
+            await deleteUser(user.id), navigation.goBack()
           )}
         >
           <Ionicons
@@ -49,7 +49,7 @@ const UserDetailsScreen = ({ navigation, deleteUser, users, selectedUser }) => {
             style={{ marginHorizontal: 80 }}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("UserListScreen")}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons
             name="ios-undo"
             size={50}

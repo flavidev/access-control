@@ -36,7 +36,7 @@ function RegisterPhotoScreen({
   const camRef = useRef(null);
   const isFocused = useIsFocused();
   const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [type, setType] = useState(Camera.Constants.Type.front);
   const [capturedPhoto, setCapturedPhoto] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
 

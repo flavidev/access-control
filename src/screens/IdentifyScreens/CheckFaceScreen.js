@@ -20,6 +20,12 @@ import { uploadFaces } from "../../external_calls/";
 
 function CheckFaceScreen({ navigation, selectedUser, users }) {
   const user = users.find((x) => x.id === selectedUser);
+
+  if (!user) {
+    navigation.goBack();
+    return <View />;
+  }
+
   const sourcePhoto = user.userPhoto;
 
   const camRef = useRef(null);
@@ -67,6 +73,7 @@ function CheckFaceScreen({ navigation, selectedUser, users }) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
         <ActivityIndicator size={50} color="#00adb5" />
+        <Text style={{fontSize:20, textAlign:"center", color:"#00adb5"}}>Identifying face, please wait.</Text>
       </View>
     );
   }
