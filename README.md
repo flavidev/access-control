@@ -1,4 +1,4 @@
-# The complete presentation can be viewed in YouTube. [Access Control Presentation](https://youtu.be/Iq2Oje6xpPM) 
+[Access Control Presentation - YouTube](https://youtu.be/Iq2Oje6xpPM) 
 HarvardX: CS50M 2020 - Final Project - Access Control with Face Recognition
 
 
